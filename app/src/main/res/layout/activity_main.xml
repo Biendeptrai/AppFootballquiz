@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#0B3D91"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Tiêu đề ứng dụng -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="⚽ FOOTBALL QUIZ ⚽"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#FFD700"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:layout_marginBottom="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Ô nhập tên người chơi -->
+    <EditText
+        android:id="@+id/etName"
+        android:hint="Nhập tên của bạn..."
+        android:textColor="#FFFFFF"
+        android:textColorHint="#CCCCCC"
+        android:padding="16dp"
+        android:background="@drawable/rounded_edittext"
+        android:textSize="18sp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName" />
+
+
+    <!-- Nút bắt đầu -->
+    <Button
+        android:id="@+id/btnStart"
+        android:text="🎮 BẮT ĐẦU THI ĐẤU"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:background="@drawable/rounded_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#002b5b">
+
+    <!-- Tiêu đề kết quả -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="🏆 KẾT QUẢ TRÒ CHƠI 🏆"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Hiển thị điểm -->
+    <TextView
+        android:id="@+id/tvResult"
+        android:text="Điểm của bạn: 0 / 10"
+        android:textColor="#FFD700"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Bảng xếp hạng -->
+    <TextView
+        android:id="@+id/tvLeaderboardTitle"
+        android:text="BẢNG XẾP HẠNG"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/transparent">
+
+        <TextView
+            android:id="@+id/tvLeaderboard"
+            android:text="1. Messi — 10 điểm\n2. Ronaldo — 9 điểm"
+            android:textColor="#E0E0E0"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
+    </ScrollView>
+
+    <!-- Nút chơi lại -->
+    <Button
+        android:id="@+id/btnReplay"
+        android:text="🔁 Chơi lại"
+        android:backgroundTint="#00A86B"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp" />
+
+    <!-- Nút thoát -->
+    <Button
+        android:id="@+id/btnExit"
+        android:text="🚪 Thoát"
+        android:backgroundTint="#C41E3A"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+
+</LinearLayout>
