@@ -89,7 +89,7 @@
         android:id="@+id/btnNext"
         android:text="Câu tiếp theo"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="#00DD00"
         android:textSize="18sp"
         android:background="@drawable/bg_button_modern"
         android:elevation="6dp"

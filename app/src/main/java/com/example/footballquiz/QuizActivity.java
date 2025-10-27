@@ -8,7 +8,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
 public class QuizActivity extends AppCompatActivity {
@@ -25,11 +24,12 @@ public class QuizActivity extends AppCompatActivity {
     private int score = 0;
     private CountDownTimer countDownTimer;
 
-    // ⏳ Thời gian giới hạn mỗi câu (15 giây)
-    private static final long TIME_LIMIT = 15000;
+    // ⏳ Thời gian mặc định
+    private long TIME_LIMIT = 15000; // 15s mặc định
     private long timeLeft = TIME_LIMIT;
 
-    private String playerName; // ✅ Lưu tên người chơi truyền từ MainActivity
+    private String playerName;
+    private String mode; // ⚙️ Chế độ người chơi (easy / normal / hard)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +46,34 @@ public class QuizActivity extends AppCompatActivity {
         rbOption4 = findViewById(R.id.rbOption4);
         btnNext = findViewById(R.id.btnNext);
 
-        // 🧍‍♂️ Nhận tên người chơi từ MainActivity
+        // 🧍‍♂️ Nhận dữ liệu từ MainActivity
         playerName = getIntent().getStringExtra("playerName");
-        if (playerName == null || playerName.trim().isEmpty()) {
-            playerName = "Người chơi"; // Dự phòng
+        mode = getIntent().getStringExtra("mode");
+
+        if (playerName == null || playerName.trim().isEmpty()) playerName = "Người chơi";
+        if (mode == null) mode = "normal"; // Mặc định là “Trung bình”
+
+        // 🧠 Áp dụng cấu hình theo chế độ
+        DBHelper dbHelper = new DBHelper(this);
+
+        switch (mode) {
+            case "easy":
+                TIME_LIMIT = 0; // không giới hạn thời gian
+                questionList = dbHelper.getRandomQuestions(10);
+                break;
+
+            case "hard":
+                TIME_LIMIT = 10000; // 10s mỗi câu
+                questionList = dbHelper.getRandomQuestions(15);
+                break;
+
+            default: // normal
+                TIME_LIMIT = 15000; // 15s
+                questionList = dbHelper.getRandomQuestions(10);
+                break;
         }
 
-        // 🧩 Lấy 10 câu hỏi ngẫu nhiên từ cơ sở dữ liệu
-        DBHelper dbHelper = new DBHelper(this);
-        questionList = dbHelper.getRandomQuestions(10);
+        timeLeft = TIME_LIMIT;
 
         // Nếu không có câu hỏi
         if (questionList.isEmpty()) {
@@ -63,10 +82,10 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
 
-        // Hiển thị câu hỏi đầu tiên
+        // 🖥️ Hiển thị câu hỏi đầu tiên
         showQuestion();
 
-        // 👉 Sự kiện nút “Câu tiếp theo”
+        // 👉 Nút “Câu tiếp theo”
         btnNext.setOnClickListener(v -> {
             checkAnswer();
             currentQuestionIndex++;
@@ -81,7 +100,14 @@ public class QuizActivity extends AppCompatActivity {
     // 🖥️ Hiển thị câu hỏi hiện tại
     private void showQuestion() {
         resetTimer();
-        startTimer();
+
+        // Nếu không giới hạn thời gian (chế độ easy)
+        if (TIME_LIMIT > 0) {
+            startTimer();
+            tvTimer.setText("⏳ " + (TIME_LIMIT / 1000) + "s");
+        } else {
+            tvTimer.setText("♾️ Không giới hạn");
+        }
 
         Question q = questionList.get(currentQuestionIndex);
         tvQuestion.setText((currentQuestionIndex + 1) + ". " + q.getQuestion());
@@ -92,10 +118,10 @@ public class QuizActivity extends AppCompatActivity {
         rgOptions.clearCheck();
     }
 
-    // ✅ Kiểm tra đáp án và cộng điểm
+    // ✅ Kiểm tra đáp án
     private void checkAnswer() {
         int selectedId = rgOptions.getCheckedRadioButtonId();
-        if (selectedId == -1) return; // chưa chọn đáp án
+        if (selectedId == -1) return;
 
         int selectedAnswer = 0;
         if (selectedId == R.id.rbOption1) selectedAnswer = 1;
@@ -103,25 +129,25 @@ public class QuizActivity extends AppCompatActivity {
         else if (selectedId == R.id.rbOption3) selectedAnswer = 3;
         else if (selectedId == R.id.rbOption4) selectedAnswer = 4;
 
-        // So sánh với đáp án đúng
         if (selectedAnswer == questionList.get(currentQuestionIndex).getCorrectAnswer()) {
             score++;
         }
     }
 
-    // ✅ Khi kết thúc quiz
+    // ✅ Kết thúc quiz
     private void finishQuiz() {
         if (countDownTimer != null) countDownTimer.cancel();
 
         Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
         intent.putExtra("score", score);
         intent.putExtra("total", questionList.size());
-        intent.putExtra("playerName", playerName); // ✅ Gửi tên người chơi
+        intent.putExtra("playerName", playerName);
+        intent.putExtra("mode", mode); // ⚙️ Gửi thêm chế độ để hiện ở ResultActivity
         startActivity(intent);
         finish();
     }
 
-    // ⏱️ Bộ đếm thời gian cho mỗi câu hỏi
+    // ⏱️ Bộ đếm thời gian
     private void startTimer() {
         countDownTimer = new CountDownTimer(timeLeft, 1000) {
             @Override
@@ -132,7 +158,6 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                // Nếu hết giờ mà chưa chọn thì tự chuyển câu
                 currentQuestionIndex++;
                 if (currentQuestionIndex < questionList.size()) {
                     showQuestion();
@@ -143,7 +168,7 @@ public class QuizActivity extends AppCompatActivity {
         }.start();
     }
 
-    // 🔄 Reset lại đồng hồ mỗi lần sang câu mới
+    // 🔄 Reset đồng hồ
     private void resetTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -151,7 +176,6 @@ public class QuizActivity extends AppCompatActivity {
         timeLeft = TIME_LIMIT;
     }
 
-    // 🧹 Giải phóng bộ đếm khi thoát activity
     @Override
     protected void onDestroy() {
         if (countDownTimer != null) countDownTimer.cancel();

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FootballQuiz</string>
+    <string name="mode_easy">🧒 Dễ</string>
+    <string name="mode_normal">⚽ Trung bình</string>
+    <string name="mode_hard">🔥 Khó</string>
 </resources>

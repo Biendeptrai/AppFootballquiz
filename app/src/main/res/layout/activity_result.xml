@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="#002b5b">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#3333FF">
+
 
     <!-- Tiêu đề kết quả -->
     <TextView
         android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="🏆 KẾT QUẢ TRÒ CHƠI 🏆"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:textSize="26sp"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="28sp"
+        android:layout_marginBottom="24dp" />
 
     <!-- Hiển thị điểm -->
     <TextView
         android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Điểm của bạn: 0 / 10"
         android:textColor="#FFD700"
         android:textStyle="bold"
-        android:textSize="22sp"
-        android:layout_marginBottom="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="24sp"
+        android:layout_marginBottom="32dp" />
 
     <!-- Bảng xếp hạng -->
     <TextView
         android:id="@+id/tvLeaderboardTitle"
-        android:text="BẢNG XẾP HẠNG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌟 BẢNG XẾP HẠNG 🌟"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="22sp"
+        android:layout_marginBottom="16dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,28 +57,46 @@
             android:layout_height="wrap_content"
             android:padding="8dp" />
     </ScrollView>
-
     <!-- Nút chơi lại -->
     <Button
         android:id="@+id/btnReplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="🔁 Chơi lại"
         android:backgroundTint="#00A86B"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_marginBottom="10dp"
-        android:padding="10dp" />
+        android:elevation="10dp" />
 
     <!-- Nút thoát -->
     <Button
         android:id="@+id/btnExit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="🚪 Thoát"
         android:backgroundTint="#C41E3A"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:elevation="10dp" />
+    <Button
+        android:id="@+id/btnReload"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp" />
+        android:text="Làm mới"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"/>
+    <Button
+        android:id="@+id/btnViewScores"
+        android:text="📋 Xem danh sách điểm"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3F51B5"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

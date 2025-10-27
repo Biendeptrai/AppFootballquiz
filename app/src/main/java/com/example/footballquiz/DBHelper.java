@@ -187,4 +187,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return topList;
     }
+    public Cursor getAllScores() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT playerName, score, category, mode, date FROM scores ORDER BY score DESC", null);
+    }
+
+
 }

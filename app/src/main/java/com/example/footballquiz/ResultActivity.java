@@ -12,6 +12,22 @@ public class ResultActivity extends AppCompatActivity {
     private TextView tvResult, tvLeaderboard;
     private Button btnReplay, btnExit;
     private DBHelper dbHelper;
+    private void loadLeaderboard() {
+        ArrayList<String> topList = dbHelper.getTopScores();
+        StringBuilder leaderboardText = new StringBuilder();
+        int rank = 1;
+        for (String s : topList) {
+            leaderboardText.append(rank).append(". ").append(s).append("\n");
+            rank++;
+        }
+        tvLeaderboard.setText(leaderboardText.toString());
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadLeaderboard();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +44,8 @@ public class ResultActivity extends AppCompatActivity {
 
         // Lấy điểm từ Intent
         int score = getIntent().getIntExtra("score", 0);
-        tvResult.setText("Điểm của bạn: " + score + " / 10");
+        tvResult.setText("Điểm của bạn: " + score + " / 20");
+
 
         // Lưu điểm (tạm đặt tên mặc định là "Người chơi")
         // Nhận tên người chơi từ Intent
@@ -38,7 +55,7 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         // Hiển thị điểm kèm tên
-        tvResult.setText("Điểm của " + playerName + ": " + score + " / 10");
+        tvResult.setText("Điểm của " + playerName + ": " + score + " / 20");
 
         // Lưu điểm vào cơ sở dữ liệu
         dbHelper.saveScore(playerName, score);
@@ -53,6 +70,12 @@ public class ResultActivity extends AppCompatActivity {
             rank++;
         }
         tvLeaderboard.setText(leaderboardText.toString());
+        Button btnViewScores = findViewById(R.id.btnViewScores);
+        btnViewScores.setOnClickListener(v -> {
+            Intent intent = new Intent(ResultActivity.this, ScoreListActivity.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
 
         // Nút chơi lại
         btnReplay.setOnClickListener(v -> {
@@ -65,5 +88,9 @@ public class ResultActivity extends AppCompatActivity {
         btnExit.setOnClickListener(v -> {
             finishAffinity(); // Đóng toàn bộ app
         });
+        // Nút làm mới
+        Button btnReload = findViewById(R.id.btnReload);
+        btnReload.setOnClickListener(v -> loadLeaderboard());
+
     }
 }

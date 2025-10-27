@@ -13,6 +13,8 @@
         <!-- Khai báo 2 Activity phụ -->
         <activity android:name=".ResultActivity" />
         <activity android:name=".QuizActivity" />
+        <activity android:name=".ScoreListActivity" />
+
         <!-- Màn hình chính khi mở app -->
         <activity
             android:name=".MainActivity"
